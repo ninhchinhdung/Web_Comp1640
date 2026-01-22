@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %> - Express MVC
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logo">Express MVC</a>
+            <ul class="nav-links">
+                <li><a href="/">Trang Chủ</a></li>
+                <li><a href="/users">Người Dùng</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="back-link">
+            <a href="/users">&larr; Quay lại danh sách</a>
+        </div>
+
+        <div class="user-detail">
+            <h1>
+                <%= user.name %>
+            </h1>
+            <div class="detail-card">
+                <div class="detail-row">
+                    <span class="label">ID:</span>
+                    <span class="value">
+                        <%= user.id %>
+                    </span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Tên:</span>
+                    <span class="value">
+                        <%= user.name %>
+                    </span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Email:</span>
+                    <span class="value">
+                        <%= user.email %>
+                    </span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Vai Trò:</span>
+                    <span class="value"><span class="badge <%= user.role === 'Admin' ? 'badge-admin' : 'badge-user' %>">
+                            <%= user.role %>
+                        </span></span>
+                </div>
+            </div>
+
+            <div class="actions">
+                <a href="/users/<%= user.id %>/edit" class="btn btn-warning">Chỉnh Sửa</a>
+                <form action="/users/<%= user.id %>/delete" method="POST" style="display: inline;">
+                    <button type="submit" class="btn btn-danger"
+                        onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Express MVC Project. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+
+</html>

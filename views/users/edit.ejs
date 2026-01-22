@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %> - Express MVC
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logo">Express MVC</a>
+            <ul class="nav-links">
+                <li><a href="/">Trang Chủ</a></li>
+                <li><a href="/users">Người Dùng</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="back-link">
+            <a href="/users/<%= user.id %>">&larr; Quay lại chi tiết</a>
+        </div>
+
+        <div class="form-container">
+            <h1>
+                <%= title %>
+            </h1>
+            <form action="/users/<%= user.id %>" method="POST" class="user-form">
+                <div class="form-group">
+                    <label for="name">Tên:</label>
+                    <input type="text" id="name" name="name" value="<%= user.name %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="<%= user.email %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">Vai Trò:</label>
+                    <select id="role" name="role">
+                        <option value="User" <%=user.role==='User' ? 'selected' : '' %>>User</option>
+                        <option value="Admin" <%=user.role==='Admin' ? 'selected' : '' %>>Admin</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Cập Nhật</button>
+                    <a href="/users/<%= user.id %>" class="btn btn-secondary">Hủy</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Express MVC Project. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+
+</html>
