@@ -1,85 +1,78 @@
-// Main JavaScript file for client-side interactions
+// Main JavaScript file for Express MVC Application
 
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('Express MVC Project loaded successfully!');
+// DOM Ready
+document.addEventListener('DOMContentLoaded', function () {
+    console.log('Express MVC Application loaded');
 
-    // Add smooth scroll behavior
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-
-    // Add animation to feature cards on scroll
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-
-    document.querySelectorAll('.feature-card').forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(card);
-    });
-
-    // Form validation
-    const forms = document.querySelectorAll('.user-form');
-    forms.forEach(form => {
-        form.addEventListener('submit', (e) => {
-            const name = form.querySelector('#name');
-            const email = form.querySelector('#email');
-
-            if (name && name.value.trim() === '') {
-                e.preventDefault();
-                alert('Vui lòng nhập tên!');
-                name.focus();
-                return;
-            }
-
-            if (email && email.value.trim() === '') {
-                e.preventDefault();
-                alert('Vui lòng nhập email!');
-                email.focus();
-                return;
-            }
-
-            if (email && !isValidEmail(email.value)) {
-                e.preventDefault();
-                alert('Email không hợp lệ!');
-                email.focus();
-                return;
-            }
-        });
-    });
-
-    // Email validation helper
-    function isValidEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-    }
-
-    // Add active class to current nav link
-    const currentPath = window.location.pathname;
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        if (link.getAttribute('href') === currentPath ||
-            (currentPath.startsWith('/users') && link.getAttribute('href') === '/users')) {
-            link.style.color = '#667eea';
-        }
-    });
+    // Initialize features
+    initDeleteConfirmations();
+    initFormValidation();
 });
+
+// Delete confirmations
+function initDeleteConfirmations() {
+    const deleteForms = document.querySelectorAll('form[action*="/delete"]');
+
+    deleteForms.forEach(form => {
+        form.addEventListener('submit', function (e) {
+            const confirmed = confirm('Are you sure you want to delete this item? This action cannot be undone.');
+            if (!confirmed) {
+                e.preventDefault();
+            }
+        });
+    });
+}
+
+// Form validation
+function initFormValidation() {
+    const forms = document.querySelectorAll('form.form');
+
+    forms.forEach(form => {
+        form.addEventListener('submit', function (e) {
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = '#dc3545';
+                } else {
+                    field.style.borderColor = '#e0e0e0';
+                }
+            });
+
+            if (!isValid) {
+                e.preventDefault();
+                alert('Please fill in all required fields');
+            }
+        });
+
+        // Reset border color on input
+        const inputs = form.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.addEventListener('input', function () {
+                this.style.borderColor = '#e0e0e0';
+            });
+        });
+    });
+}
+
+// Utility function to format currency
+function formatCurrency(amount) {
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+    }).format(amount);
+}
+
+// Utility function to format date
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    }).format(date);
+}

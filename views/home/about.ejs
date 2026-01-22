@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <%- include('../partials/header') %>
+
+        <main class="container">
+            <section class="about-section">
+                <h1>About Express MVC</h1>
+                <p>This is a full-featured MVC (Model-View-Controller) web application built with:</p>
+                <ul>
+                    <li><strong>Express.js</strong> - Fast, unopinionated web framework for Node.js</li>
+                    <li><strong>MongoDB</strong> - NoSQL database for flexible data storage</li>
+                    <li><strong>Mongoose</strong> - Elegant MongoDB object modeling</li>
+                    <li><strong>EJS</strong> - Embedded JavaScript templating</li>
+                </ul>
+
+                <h2>Features</h2>
+                <ul>
+                    <li>Complete CRUD operations for Users and Products</li>
+                    <li>RESTful API routing</li>
+                    <li>Data validation and error handling</li>
+                    <li>Responsive design</li>
+                    <li>Modular MVC architecture</li>
+                </ul>
+            </section>
+        </main>
+
+        <%- include('../partials/footer') %>
+
+            <script src="/js/main.js"></script>
+</body>
+
+</html>

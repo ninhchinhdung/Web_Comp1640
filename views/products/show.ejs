@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <%- include('../partials/header') %>
+
+        <main class="container">
+            <div class="detail-view">
+                <div class="detail-header">
+                    <h1>
+                        <%= product.name %>
+                    </h1>
+                    <div class="detail-actions">
+                        <a href="/products/<%= product._id %>/edit" class="btn btn-warning">Edit</a>
+                        <form action="/products/<%= product._id %>/delete" method="POST" style="display: inline;">
+                            <button type="submit" class="btn btn-danger"
+                                onclick="return confirm('Are you sure?')">Delete</button>
+                        </form>
+                        <a href="/products" class="btn btn-secondary">Back to List</a>
+                    </div>
+                </div>
+
+                <div class="product-detail">
+                    <div class="product-image">
+                        <img src="<%= product.imageUrl %>" alt="<%= product.name %>">
+                    </div>
+
+                    <div class="product-details">
+                        <h3>Product Information</h3>
+                        <dl class="detail-list">
+                            <dt>Name:</dt>
+                            <dd>
+                                <%= product.name %>
+                            </dd>
+
+                            <dt>Description:</dt>
+                            <dd>
+                                <%= product.description %>
+                            </dd>
+
+                            <dt>Price:</dt>
+                            <dd class="price">$<%= product.price.toFixed(2) %>
+                            </dd>
+
+                            <dt>Category:</dt>
+                            <dd><span class="badge">
+                                    <%= product.category %>
+                                </span></dd>
+
+                            <dt>Stock:</dt>
+                            <dd>
+                                <% if (product.stock> 0) { %>
+                                    <span class="badge badge-success">
+                                        <%= product.stock %> units available
+                                    </span>
+                                    <% } else { %>
+                                        <span class="badge badge-danger">Out of Stock</span>
+                                        <% } %>
+                            </dd>
+
+                            <dt>Availability:</dt>
+                            <dd>
+                                <% if (product.isAvailable) { %>
+                                    <span class="badge badge-success">Available</span>
+                                    <% } else { %>
+                                        <span class="badge badge-danger">Not Available</span>
+                                        <% } %>
+                            </dd>
+
+                            <dt>Created At:</dt>
+                            <dd>
+                                <%= new Date(product.createdAt).toLocaleString() %>
+                            </dd>
+
+                            <dt>Last Updated:</dt>
+                            <dd>
+                                <%= new Date(product.updatedAt).toLocaleString() %>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <%- include('../partials/footer') %>
+
+            <script src="/js/main.js"></script>
+</body>
+
+</html>

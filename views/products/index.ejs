@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <%- include('../partials/header') %>
+
+        <main class="container">
+            <div class="page-header">
+                <h1>Products Catalog</h1>
+                <a href="/products/new" class="btn btn-primary">Add New Product</a>
+            </div>
+
+            <div class="filters">
+                <form action="/products" method="GET" class="filter-form">
+                    <div class="filter-group">
+                        <label for="category">Category:</label>
+                        <select name="category" id="category" onchange="this.form.submit()">
+                            <option value="all" <%=currentCategory==='all' ? 'selected' : '' %>>All Categories</option>
+                            <option value="Electronics" <%=currentCategory==='Electronics' ? 'selected' : '' %>
+                                >Electronics</option>
+                            <option value="Clothing" <%=currentCategory==='Clothing' ? 'selected' : '' %>>Clothing
+                            </option>
+                            <option value="Food" <%=currentCategory==='Food' ? 'selected' : '' %>>Food</option>
+                            <option value="Books" <%=currentCategory==='Books' ? 'selected' : '' %>>Books</option>
+                            <option value="Home" <%=currentCategory==='Home' ? 'selected' : '' %>>Home</option>
+                            <option value="Sports" <%=currentCategory==='Sports' ? 'selected' : '' %>>Sports</option>
+                            <option value="Other" <%=currentCategory==='Other' ? 'selected' : '' %>>Other</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="search">Search:</label>
+                        <input type="text" name="search" id="search" value="<%= searchQuery %>"
+                            placeholder="Search products...">
+                        <button type="submit" class="btn btn-small">Search</button>
+                    </div>
+                </form>
+            </div>
+
+            <% if (products && products.length> 0) { %>
+                <div class="product-grid">
+                    <% products.forEach(product=> { %>
+                        <div class="product-card">
+                            <img src="<%= product.imageUrl %>" alt="<%= product.name %>">
+                            <div class="product-info">
+                                <h3>
+                                    <%= product.name %>
+                                </h3>
+                                <p class="description">
+                                    <%= product.description.substring(0, 100) %>...
+                                </p>
+                                <p class="price">$<%= product.price.toFixed(2) %>
+                                </p>
+                                <p class="category"><span class="badge">
+                                        <%= product.category %>
+                                    </span></p>
+                                <p class="stock">
+                                    <% if (product.stock> 0) { %>
+                                        <span class="badge badge-success">In Stock (<%= product.stock %>)</span>
+                                        <% } else { %>
+                                            <span class="badge badge-danger">Out of Stock</span>
+                                            <% } %>
+                                </p>
+                                <div class="product-actions">
+                                    <a href="/products/<%= product._id %>" class="btn btn-small btn-info">View</a>
+                                    <a href="/products/<%= product._id %>/edit"
+                                        class="btn btn-small btn-warning">Edit</a>
+                                    <form action="/products/<%= product._id %>/delete" method="POST"
+                                        style="display: inline;">
+                                        <button type="submit" class="btn btn-small btn-danger"
+                                            onclick="return confirm('Are you sure?')">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <% }); %>
+                </div>
+                <% } else { %>
+                    <div class="empty-state">
+                        <p>No products found. <a href="/products/new">Add your first product</a></p>
+                    </div>
+                    <% } %>
+        </main>
+
+        <%- include('../partials/footer') %>
+
+            <script src="/js/main.js"></script>
+</body>
+
+</html>
