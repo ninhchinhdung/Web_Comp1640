@@ -3,6 +3,10 @@ const bodyParser = require('body-parser');
 const path = require('path');
 require('dotenv').config();
 
+// Database connection
+const connectDB = require('./config/database');
+connectDB();
+
 const app = express();
 
 // View engine setup
@@ -26,7 +30,7 @@ app.use((req, res) => {
 // Error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).render('error', { 
+  res.status(500).render('error', {
     title: 'Error',
     error: process.env.NODE_ENV === 'development' ? err : {}
   });
